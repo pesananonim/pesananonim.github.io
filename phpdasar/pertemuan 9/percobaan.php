@@ -1,22 +1,26 @@
 <?php
 
-$conn = mysqli_connect("localhost", "root", "", "phpdasar");
+require 'function.php';
+$pesananonim = query("SELECT * FROM pesananonim");
+$conn = mysqli_connect("sql107.infinityfree.com", "u954815338_pesananonim", "Muhamadirfan1234.", "u954815338_phpdasar");
 
 if(isset($_POST["submit"])) {
 
-
-    $nama  = $_POST["nama"];
-    $pesan = $_POST["pesan"];
-
-    global $conn;
-
-    $query = "INSERT INTO pesananonim
-            VALUES 
-            ('$nama', '$pesan')
-            ";
-   mysqli_query($conn, $query);
-
-
+    if( tambah($_POST) > 0 ) {
+        echo "
+        <script>
+        alert('data berhasil ditambahkan');
+        document.location.href = 'percobaan.php';
+        </script>
+        ";
+    } else {
+        echo "
+        <script>
+        alert('data gagal ditambahkan');
+        document.location.href = 'percobaan.php';
+        </script>
+        ";
+    }
 }
 ?>
 
@@ -28,12 +32,47 @@ if(isset($_POST["submit"])) {
     <title>Pengirim Pesan Anonim</title>
     <style>
       body {
-        font-family: Arial, sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-      }
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            animation: gradientBackground 10s infinite alternate;
+        }
+
+        @keyframes gradientBackground {
+            0% {
+                background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            }
+            25% {
+                background: linear-gradient(45deg, #fad0c4, #a18cd1);
+            }
+            50% {
+                background: linear-gradient(45deg, #a18cd1, #ff9a9e);
+            }
+            75% {
+                background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+            }
+            100% {
+                background: linear-gradient(45deg, #fad0c4, #a18cd1);
+            }
+        }
+
+        .fadeIn {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
 
       h1 {
         text-align: center;
@@ -79,6 +118,7 @@ if(isset($_POST["submit"])) {
     </style>
   </head>
   <body>
+    <div>
     <h1>Pengirim Pesan Anonim</h1>
 
 
@@ -91,5 +131,6 @@ if(isset($_POST["submit"])) {
 
       <button type="submit" name="submit">Tambah Data</button>
     </form>
+    </div>
   </body>
 </html>
